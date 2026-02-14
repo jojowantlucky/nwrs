@@ -1,7 +1,6 @@
 {
 	"name": "nwrs",
 	"version": "0.1.0",
-	"homepage": "/updates",
 	"private": true,
 	"dependencies": {
 		"@testing-library/dom": "^10.4.1",
