@@ -1,19 +1,99 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="theme-color" content="#000000" />
-		<meta name="description" content="Web site created using create-react-app" />
-		<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-
-		<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-
-		<title>Noteworthy Rehearsal Studios - Portland, OR</title>
-	</head>
-	<body>
-		<noscript>You need to enable JavaScript to run this app.</noscript>
-		<div id="root"></div>
-	</body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0A0E27">
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RZ2SZV1EBQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    
+    // Only track production traffic (exclude /updates development site)
+    if (!window.location.pathname.startsWith('/updates')) {
+      gtag('config', 'G-RZ2SZV1EBQ');
+    }
+  </script>
+  
+  <title>Noteworthy Rehearsal Studios | Shared Rehearsal Space in St Johns, Portland OR</title>
+  <meta name="description" content="Premium shared rehearsal space in St Johns, Portland, Oregon. $300-$350/month. Includes PA, drums, amp, 24/7 access, climate control, and indoor parking. Book your weekly slot today.">
+  <meta name="keywords" content="rehearsal studio portland, st johns rehearsal space, music practice space portland oregon, shared rehearsal studio, band rehearsal room, portland music studio, affordable rehearsal space">
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nwrs.space">
+  <meta property="og:title" content="Noteworthy Rehearsal Studios | St Johns, Portland OR">
+  <meta property="og:description" content="Premium shared rehearsal space in St Johns, Portland. $300-$350/month with all equipment included. 24/7 access.">
+  <meta property="og:image" content="https://nwrs.space/images/hero.webp">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Noteworthy Rehearsal Studios | St Johns, Portland OR">
+  <meta name="twitter:description" content="Premium shared rehearsal space in St Johns, Portland. $300-$350/month with all equipment included.">
+  <meta name="twitter:image" content="https://nwrs.space/images/hero.webp">
+  
+  <!-- Schema.org Markup for Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MusicVenue",
+    "name": "Noteworthy Rehearsal Studios",
+    "description": "Shared rehearsal space in St Johns, Portland, Oregon with professional equipment and 24/7 access",
+    "image": "https://nwrs.space/images/hero.webp",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "St Johns",
+      "addressRegion": "OR",
+      "addressCountry": "US",
+      "postalCode": "97203"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "45.5898",
+      "longitude": "-122.7544"
+    },
+    "url": "https://nwrs.space",
+    "priceRange": "$$",
+    "telephone": "+1-XXX-XXX-XXXX",
+    "openingHours": "Mo-Su 00:00-23:59",
+    "amenityFeature": [
+      {
+        "@type": "LocationFeatureSpecification",
+        "name": "PA System",
+        "value": true
+      },
+      {
+        "@type": "LocationFeatureSpecification",
+        "name": "Drum Set",
+        "value": true
+      },
+      {
+        "@type": "LocationFeatureSpecification",
+        "name": "Guitar Amp",
+        "value": true
+      },
+      {
+        "@type": "LocationFeatureSpecification",
+        "name": "Climate Control",
+        "value": true
+      },
+      {
+        "@type": "LocationFeatureSpecification",
+        "name": "Parking",
+        "value": true
+      }
+    ]
+  }
+  </script>
+  
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+</head>
+</head>
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+</body>
 </html>
