@@ -9,7 +9,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import './components/NWRSWebsite.css';
+import './NWRSWebsite.css';
 
 function NWRSWebsite() {
   
