@@ -96,7 +96,10 @@ function NWRSWebsite() {
 					<div className='feature-card'>
 						<div className='feature-icon'>⚡</div>
 						<h3>Flexible Booking</h3>
-						<p>$300 for one day per week, $350 for two days per week.</p>
+						<p>
+							$300 for one day per week, $350 for two days per week. $150 non-refundable deposit
+							required upon signup.
+						</p>
 					</div>
 				</div>
 			</section>
