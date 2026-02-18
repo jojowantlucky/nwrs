@@ -1,41 +1,20 @@
-import React, { useState } from 'react';
-import './components/NWRSWebsite';
+import React, { useState, useEffect } from 'react';
+import './NWRSWebsite.css';
 
 function NWRSWebsite() {
-	const [formData, setFormData] = useState({
-		name: '',
-		email: '',
-		phone: '',
-		message: '',
-	});
-	const [submitted, setSubmitted] = useState(false);
-	const [submitting, setSubmitting] = useState(false);
+	useEffect(() => {
+		// Load CheckCherry iframe script
+		const script = document.createElement('script');
+		script.src = 'https://noteworthy-djs.checkcherry.com/api/checkcherry_widgets/iframe';
+		script.type = 'text/javascript';
+		script.charset = 'utf-8';
+		document.body.appendChild(script);
 
-	const handleChange = (e) => {
-		setFormData({
-			...formData,
-			[e.target.name]: e.target.value,
-		});
-	};
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		setSubmitting(true);
-
-		// Simulate form submission
-		// In production, integrate with your backend or service like Formspree, Netlify Forms, etc.
-		setTimeout(() => {
-			console.log('Form submitted:', formData);
-			setSubmitted(true);
-			setSubmitting(false);
-
-			// Reset form after 3 seconds
-			setTimeout(() => {
-				setFormData({ name: '', email: '', phone: '', message: '' });
-				setSubmitted(false);
-			}, 3000);
-		}, 1000);
-	};
+		return () => {
+			// Cleanup script on unmount
+			document.body.removeChild(script);
+		};
+	}, []);
 
 	const scrollToContact = () => {
 		document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
@@ -154,63 +133,23 @@ function NWRSWebsite() {
 						back to you within 24 hours.
 					</p>
 
-					<form className='contact-form' onSubmit={handleSubmit}>
-						<div className='form-group'>
-							<label htmlFor='name'>Name *</label>
-							<input
-								type='text'
-								id='name'
-								name='name'
-								value={formData.name}
-								onChange={handleChange}
-								required
-							/>
-						</div>
-
-						<div className='form-group'>
-							<label htmlFor='email'>Email *</label>
-							<input
-								type='email'
-								id='email'
-								name='email'
-								value={formData.email}
-								onChange={handleChange}
-								required
-							/>
-						</div>
-
-						<div className='form-group'>
-							<label htmlFor='phone'>Phone</label>
-							<input
-								type='tel'
-								id='phone'
-								name='phone'
-								value={formData.phone}
-								onChange={handleChange}
-							/>
-						</div>
-
-						<div className='form-group'>
-							<label htmlFor='message'>Message *</label>
-							<textarea
-								id='message'
-								name='message'
-								value={formData.message}
-								onChange={handleChange}
-								placeholder='Tell us about your project, preferred times, or any questions you have...'
-								required></textarea>
-						</div>
-
-						<button type='submit' className='submit-button' disabled={submitting}>
-							{submitting ? 'Sending...' : 'Send Message'}
-						</button>
-
-						{submitted && (
-							<div className='success-message'>
-								Thanks for reaching out! We'll be in touch soon.
-							</div>
-						)}
-					</form>
+					<div className='contact-form'>
+						<iframe
+							className='checkcherry-autoresize-frame'
+							src='https://noteworthy-djs.checkcherry.com/contact/18444?iframe=true&props=%7B%22labelsAsPlaceholders%22%3Afalse%2C%22wideSubmitButtons%22%3Afalse%2C%22buttonBackgroundColor%22%3A%22%22%2C%22buttonForegroundColor%22%3A%22%22%2C%22maxWidth%22%3A%22100%25%22%2C%22fontFamily%22%3A%22Montserrat%22%7D'
+							style={{
+								margin: 0,
+								padding: 0,
+								border: 'none',
+								maxWidth: '100%',
+								width: '100%',
+								height: '400px',
+							}}
+							scrolling='auto'
+							allowTransparency='true'
+							title='Contact Form'
+						/>
+					</div>
 				</div>
 			</section>
 
