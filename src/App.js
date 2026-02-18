@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './NWRSWebsite.css';
+import './components/NWRSWebsite.css';
 
 function NWRSWebsite() {
 	const [formData, setFormData] = useState({
