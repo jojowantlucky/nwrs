@@ -59,11 +59,16 @@ const AvailabilityCalendar = () => {
 				}
 
 				const data = await response.json();
-				console.log('Google Calendar API Response:', data);
-				console.log('Calendar ID being queried:', CALENDAR_ID);
+				console.log('=== FULL Google Calendar API Response ===');
+				console.log(JSON.stringify(data, null, 2));
+				console.log('=== Calendar ID being queried ===');
+				console.log(CALENDAR_ID);
+				console.log('=== Calendar data for this ID ===');
+				console.log(JSON.stringify(data.calendars[CALENDAR_ID], null, 2));
 
 				const busy = data.calendars[CALENDAR_ID]?.busy || [];
-				console.log('Busy slots found:', busy);
+				console.log('=== Busy slots found ===');
+				console.log(busy);
 
 				setBusySlots(busy);
 				setLoading(false);
