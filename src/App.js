@@ -9,8 +9,8 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import './NWRSWebsite.css';
-import AvailabilityCalendar from './AvailabilityCalendar';
+import './components/NWRSWebsite.css';
+import AvailabilityCalendar from './components/AvailabilityCalendar';
 
 function NWRSWebsite() {
   
