@@ -9,8 +9,8 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import './components/NWRSWebsite.css';
-import AvailabilityCalendar from './components/AvailabilityCalendar';
+import './NWRSWebsite.css';
+import AvailabilityCalendar from './AvailabilityCalendar';
 
 function NWRSWebsite() {
   
@@ -231,7 +231,7 @@ function NWRSWebsite() {
       {/* Footer */}
       <footer>
         <div className="footer-content">
-          <h3>Noteworthy Rehearsal Studios</h3>
+          <h3>Noteworthy Rehearsal Studio</h3>
           <div className="footer-info">
             <span>Portland, Oregon</span>
             <a href="tel:+15037700382">503-770-0382</a>
