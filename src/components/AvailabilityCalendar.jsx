@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './components/AvailabilityCalendar.css';
+import './AvailabilityCalendar.css';
 
 const AvailabilityCalendar = () => {
 	const [currentWeekStart, setCurrentWeekStart] = useState(getMonday(new Date()));
