@@ -1,274 +1,217 @@
-/**
- * Noteworthy Rehearsal Studios Website Component
- *
- * IMPORTANT NOTE FOR APP.JS:
- * When importing this component in App.js, use:
- * import './components/NWRSWebsite.css';
- *
- * This ensures the CSS is loaded correctly from the components directory.
- */
-
 import React, { useState, useEffect } from 'react';
-import './components/NWRSWebsite.css';
+import './AvailabilityCalendar.css';
 
-function NWRSWebsite() {
-	useEffect(() => {
-		// Load CheckCherry iframe script
-		const script = document.createElement('script');
-		script.src = 'https://noteworthy-djs.checkcherry.com/api/checkcherry_widgets/iframe';
-		script.type = 'text/javascript';
-		script.charset = 'utf-8';
-		document.body.appendChild(script);
+const AvailabilityCalendar = () => {
+  const [currentWeekStart, setCurrentWeekStart] = useState(getMonday(new Date()));
+  const [busySlots, setBusySlots] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-		return () => {
-			// Cleanup script on unmount
-			document.body.removeChild(script);
-		};
-	}, []);
+  const API_KEY = 'AIzaSyBiwkJQmPKnVCamRAgeiVJNFf1mb6ZkLSo';
+  const CALENDAR_ID = 'nwrsrehearsalcalendar@gmail.com';
 
-	const scrollToContact = () => {
-		document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-	};
+  // Get Monday of current week
+  function getMonday(date) {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+    return new Date(d.setDate(diff));
+  }
 
-	return (
-		<>
-			{/* Hero Section */}
-			<div
-				className='hero'
-				style={{
-					backgroundImage: `linear-gradient(135deg, rgba(10, 14, 39, 0.85) 0%, rgba(26, 31, 66, 0.85) 100%), url(${process.env.PUBLIC_URL}/images/hero.webp)`,
-					backgroundPosition: 'center',
-					backgroundSize: 'cover',
-					backgroundRepeat: 'no-repeat',
-				}}>
-				<div className='hero-content'>
-					<h1>
-						Noteworthy
-						<span>Rehearsal Studios</span>
-					</h1>
-					<p>
-						Premium shared rehearsal space in the St John's area of Portland, Oregon.
-						Professional-grade acoustics, top-tier equipment, and the creative environment your
-						music deserves.
-					</p>
-					<button className='cta-button' onClick={scrollToContact}>
-						Get Studio Info
-					</button>
-				</div>
-			</div>
+  // Format date for API (RFC3339)
+  function formatDateForAPI(date) {
+    return date.toISOString();
+  }
 
-			{/* Features Section */}
-			<section id='features'>
-				<h2 className='section-title'>Why Choose Us</h2>
-				<div className='features-grid'>
-					<div className='feature-card'>
-						<div className='feature-icon'>🎸</div>
-						<h3>Pro Equipment</h3>
-						<p>
-							Fully-equipped studio with professional PA system, drum kit, amps, and backline.
-							Everything you need to focus on your craft.
-						</p>
-					</div>
-					<div className='feature-card'>
-						<div className='feature-icon'>🔊</div>
-						<h3>Acoustic Excellence</h3>
-						<p>
-							200 sq ft soundproof room with custom acoustic treatment designed for optimal sound
-							quality and isolation.
-						</p>
-					</div>
-					<div className='feature-card'>
-						<div className='feature-icon'>📍</div>
-						<h3>Prime Location</h3>
-						<p>
-							Conveniently located in St John's with easy access, indoor parking, and a creative
-							community atmosphere.
-						</p>
-					</div>
-					<div className='feature-card'>
-						<div className='feature-icon'>✅</div>
-						<h3>Safe & Secure</h3>
-						<p>
-							All tenants must pass a background check, ensuring a safe and professional environment
-							for everyone.
-						</p>
-					</div>
-					<div className='feature-card'>
-						<div className='feature-icon'>⚡</div>
-						<h3>Flexible Booking</h3>
-						<p>
-							$300 for one day per week, $350 for two days per week. $150 non-refundable deposit
-							required upon signup.
-						</p>
-					</div>
-				</div>
-			</section>
+  // Fetch busy times from Google Calendar
+  useEffect(() => {
+    const fetchBusyTimes = async () => {
+      setLoading(true);
+      setError(null);
 
-			{/* Amenities Section */}
-			<section id='amenities' style={{ background: 'var(--bg)', padding: '5rem 2rem' }}>
-				<div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-					<h2 className='section-title'>Studio Amenities</h2>
-					<div className='features-grid'>
-						<div className='feature-card'>
-							<div className='feature-icon'>🎤</div>
-							<h3>Included Gear</h3>
-							<p>
-								PA system with mics and stands, 5-piece drum set, and 50W guitar amp (clone of
-								Soldano SLO 100). Ready to plug in and play.
-							</p>
-						</div>
-						<div className='feature-card'>
-							<div className='feature-icon'>🚗</div>
-							<h3>Easy Load-In</h3>
-							<p>
-								Drive right up to the front door for super easy load-in and load-out. Indoor parking
-								available.
-							</p>
-						</div>
-						<div className='feature-card'>
-							<div className='feature-icon'>🔐</div>
-							<h3>24/7 Access</h3>
-							<p>
-								Keypad locks provide secure access any time, day or night. Security cameras keep the
-								space safe.
-							</p>
-						</div>
-						<div className='feature-card'>
-							<div className='feature-icon'>🌡️</div>
-							<h3>Climate Controlled</h3>
-							<p>
-								A/C and heat keep you comfortable year-round, no matter how long your session runs.
-							</p>
-						</div>
-						<div className='feature-card'>
-							<div className='feature-icon'>💡</div>
-							<h3>RGB Lighting</h3>
-							<p>
-								Control the vibe with customizable RGB LED lighting. Set the mood for your rehearsal
-								or recording.
-							</p>
-						</div>
-						<div className='feature-card'>
-							<div className='feature-icon'>🍕</div>
-							<h3>Food & Amenities</h3>
-							<p>
-								On-site brewery and restaurant (Occidental Brewing). Kitchen with fridge/freezer,
-								microwave, and oven. Free WiFi and restrooms.
-							</p>
-						</div>
-					</div>
-				</div>
-			</section>
+      try {
+        const weekStart = new Date(currentWeekStart);
+        weekStart.setHours(0, 0, 0, 0);
+        
+        const weekEnd = new Date(currentWeekStart);
+        weekEnd.setDate(weekEnd.getDate() + 7);
+        weekEnd.setHours(23, 59, 59, 999);
 
-			{/* Gallery Section */}
-			<section className='gallery' id='gallery'>
-				<h2 className='section-title' style={{ color: 'white' }}>
-					Our Studio
-				</h2>
-				<div className='gallery-grid'>
-					<div className='gallery-item'>
-						<img
-							src={`${process.env.PUBLIC_URL}/images/studio1.jpg`}
-							alt='Rehearsal Studio Room 1'
-						/>
-					</div>
-					<div className='gallery-item'>
-						<img
-							src={`${process.env.PUBLIC_URL}/images/studio2.jpg`}
-							alt='Rehearsal Studio Room 2'
-						/>
-					</div>
-					<div className='gallery-item'>
-						<img
-							src={`${process.env.PUBLIC_URL}/images/studio3.jpg`}
-							alt='Rehearsal Studio Room 3'
-						/>
-					</div>
-					<div className='gallery-item'>
-						<img
-							src={`${process.env.PUBLIC_URL}/images/studio4.jpg`}
-							alt='Rehearsal Studio Room 4'
-						/>
-					</div>
-					<div className='gallery-item'>
-						<img
-							src={`${process.env.PUBLIC_URL}/images/studio5.jpg`}
-							alt='Rehearsal Studio Room 5'
-						/>
-					</div>
-				</div>
-			</section>
+        const timeMin = formatDateForAPI(weekStart);
+        const timeMax = formatDateForAPI(weekEnd);
 
-			{/* Calendar Section */}
-			<section id='availability' style={{ background: 'var(--bg)', padding: '5rem 2rem' }}>
-				<div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-					<h2 className='section-title'>Check Availability</h2>
-					<p
-						style={{
-							fontSize: '1.2rem',
-							color: 'var(--text-light)',
-							marginBottom: '2rem',
-							maxWidth: '800px',
-						}}>
-						See our current booking schedule below. Busy times are blocked out - open slots mean the
-						studio is available for you!
-					</p>
-					<div className='calendar-container'>
-						<iframe
-							src='https://calendar.google.com/calendar/embed?height=700&wkst=1&ctz=America%2FLos_Angeles&showPrint=0&showDetails=0&showCalendars=0&title=Studio%20Availability&showTz=0&src=bndyZWhlYXJzYWxjYWxlbmRhckBnbWFpbC5jb20&color=%237986cb'
-							style={{ borderWidth: 0 }}
-							width='1200'
-							height='700'
-							frameBorder='0'
-							scrolling='no'
-							title='Studio Availability Calendar'
-						/>
-					</div>
-				</div>
-			</section>
+        const url = `https://www.googleapis.com/calendar/v3/freeBusy?key=${API_KEY}`;
+        
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            timeMin: timeMin,
+            timeMax: timeMax,
+            items: [{ id: CALENDAR_ID }]
+          })
+        });
 
-			{/* Contact Section */}
-			<section className='contact-section' id='contact'>
-				<div className='contact-container'>
-					<h2 className='section-title'>Get In Touch</h2>
-					<p style={{ fontSize: '1.2rem', color: 'var(--text-light)', marginBottom: '2rem' }}>
-						Ready to book your session or want to learn more? Fill out the form below and we'll get
-						back to you within 24 hours.
-					</p>
+        if (!response.ok) {
+          throw new Error('Failed to fetch calendar data');
+        }
 
-					<div className='contact-form'>
-						<iframe
-							className='checkcherry-autoresize-frame'
-							src='https://noteworthy-djs.checkcherry.com/contact/18444?iframe=true&props=%7B%22labelsAsPlaceholders%22%3Afalse%2C%22wideSubmitButtons%22%3Afalse%2C%22buttonBackgroundColor%22%3A%22%22%2C%22buttonForegroundColor%22%3A%22%22%2C%22maxWidth%22%3A%22100%25%22%2C%22fontFamily%22%3A%22Montserrat%22%7D'
-							style={{
-								margin: 0,
-								padding: 0,
-								border: 'none',
-								maxWidth: '100%',
-								width: '100%',
-								height: '600px',
-							}}
-							scrolling='auto'
-							allowTransparency='true'
-							title='Contact Form'
-						/>
-					</div>
-				</div>
-			</section>
+        const data = await response.json();
+        const busy = data.calendars[CALENDAR_ID]?.busy || [];
+        setBusySlots(busy);
+        setLoading(false);
+      } catch (err) {
+        console.error('Calendar fetch error:', err);
+        setError('Unable to load availability. Please try again later.');
+        setLoading(false);
+      }
+    };
 
-			{/* Footer */}
-			<footer>
-				<div className='footer-content'>
-					<h3>Noteworthy Rehearsal Studios</h3>
-					<div className='footer-info'>
-						<span>Portland, Oregon</span>
-						<a href='mailto:info@nwrs.space'>info@nwrs.space</a>
-						<span>© 2025 NWRS</span>
-					</div>
-				</div>
-			</footer>
-		</>
-	);
-}
+    fetchBusyTimes();
+    
+    // Refresh every 5 minutes
+    const interval = setInterval(fetchBusyTimes, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [currentWeekStart]);
 
-export default NWRSWebsite;
+  // Check if a time slot is busy
+  const isSlotBusy = (date, hour) => {
+    const slotStart = new Date(date);
+    slotStart.setHours(hour, 0, 0, 0);
+    const slotEnd = new Date(date);
+    slotEnd.setHours(hour + 1, 0, 0, 0);
+
+    return busySlots.some(busy => {
+      const busyStart = new Date(busy.start);
+      const busyEnd = new Date(busy.end);
+      
+      // Check if slot overlaps with any busy period
+      return (
+        (slotStart >= busyStart && slotStart < busyEnd) ||
+        (slotEnd > busyStart && slotEnd <= busyEnd) ||
+        (slotStart <= busyStart && slotEnd >= busyEnd)
+      );
+    });
+  };
+
+  // Navigate weeks
+  const previousWeek = () => {
+    const newDate = new Date(currentWeekStart);
+    newDate.setDate(newDate.getDate() - 7);
+    setCurrentWeekStart(newDate);
+  };
+
+  const nextWeek = () => {
+    const newDate = new Date(currentWeekStart);
+    newDate.setDate(newDate.getDate() + 7);
+    setCurrentWeekStart(newDate);
+  };
+
+  // Generate week dates
+  const weekDates = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date(currentWeekStart);
+    date.setDate(date.getDate() + i);
+    return date;
+  });
+
+  // Hours to display (8am - 11pm)
+  const hours = Array.from({ length: 16 }, (_, i) => i + 8);
+
+  // Format hour for display
+  const formatHour = (hour) => {
+    if (hour === 0) return '12am';
+    if (hour === 12) return '12pm';
+    if (hour < 12) return `${hour}am`;
+    return `${hour - 12}pm`;
+  };
+
+  // Format date for header
+  const formatDate = (date) => {
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    return `${days[date.getDay()]} ${date.getMonth() + 1}/${date.getDate()}`;
+  };
+
+  // Format week range
+  const formatWeekRange = () => {
+    const start = currentWeekStart;
+    const end = new Date(currentWeekStart);
+    end.setDate(end.getDate() + 6);
+    
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return `${months[start.getMonth()]} ${start.getDate()} - ${months[end.getMonth()]} ${end.getDate()}, ${end.getFullYear()}`;
+  };
+
+  if (loading && busySlots.length === 0) {
+    return (
+      <div className="availability-calendar">
+        <div className="calendar-loading">Loading availability...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="availability-calendar">
+        <div className="calendar-error">{error}</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="availability-calendar">
+      <div className="calendar-header">
+        <button onClick={previousWeek} className="nav-button" aria-label="Previous week">
+          ← Previous
+        </button>
+        <h3 className="week-range">{formatWeekRange()}</h3>
+        <button onClick={nextWeek} className="nav-button" aria-label="Next week">
+          Next →
+        </button>
+      </div>
+
+      <div className="calendar-grid-container">
+        <div className="calendar-grid">
+          {/* Day headers */}
+          <div className="time-column"></div>
+          {weekDates.map((date, i) => (
+            <div key={i} className="day-header">
+              {formatDate(date)}
+            </div>
+          ))}
+
+          {/* Time slots */}
+          {hours.map((hour) => (
+            <React.Fragment key={hour}>
+              <div className="time-label">{formatHour(hour)}</div>
+              {weekDates.map((date, i) => {
+                const isBusy = isSlotBusy(date, hour);
+                return (
+                  <div
+                    key={`${hour}-${i}`}
+                    className={`time-slot ${isBusy ? 'busy' : 'available'}`}
+                    title={isBusy ? 'Booked' : 'Available'}
+                  />
+                );
+              })}
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
+
+      <div className="calendar-legend">
+        <div className="legend-item">
+          <span className="legend-color available"></span>
+          <span>Available</span>
+        </div>
+        <div className="legend-item">
+          <span className="legend-color busy"></span>
+          <span>Booked</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AvailabilityCalendar;
