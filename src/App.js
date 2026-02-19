@@ -10,7 +10,7 @@
 
 import React, { useState, useEffect } from 'react';
 import './components/NWRSWebsite.css';
-import AvailabilityCalendar from './components/AvailabilityCalendar';
+import AvailabilityCalendar from './AvailabilityCalendar';
 
 function NWRSWebsite() {
 	useEffect(() => {
@@ -254,8 +254,13 @@ function NWRSWebsite() {
 					<h3>Noteworthy Rehearsal Studios</h3>
 					<div className='footer-info'>
 						<span>Portland, Oregon</span>
+						<a href='tel:+15037700382'>503-770-0382</a>
 						<a href='mailto:info@nwrs.space'>info@nwrs.space</a>
-						<span>© 2025 NWRS</span>
+					</div>
+					<div className='footer-info' style={{ marginTop: '1rem', fontSize: '0.9rem' }}>
+						<span>© 2025 Noteworthy Productions, LLC</span>
+						<span>•</span>
+						<span>Designed by Joe Ebner</span>
 					</div>
 				</div>
 			</footer>
